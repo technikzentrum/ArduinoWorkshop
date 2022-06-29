@@ -1,0 +1,18 @@
+Software:
+
+Notepad++: https://notepad-plus-plus.org/downloads/v8.2.1/
+-> Ein schneller Editor, den man imme rgebrauchen kann um datein schnell zu öffnen und zu bearbeiten.
+
+Arduino IDE (1): https://www.arduino.cc/en/software
+-> Programmierumgebung für Arduino Systeme
+Arduino IDE (2) https://www.arduino.cc/en/software (weiter unten)
+-> IDE für Arduino
+-> Unter "Datei"->"Voreinstellungen"->"Zusätzliche Vordverwalter-URLs" müssen diese drei Links eingetragen werden.
+--> https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
+--> https://arduino.esp8266.com/stable/package_esp8266com_index.json
+--> https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series/releases/download/0.0.5/package_heltec_esp32_index.json
+
+
+Visual Studio Code: https://code.visualstudio.com/
++ PlatformIO: https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide
+-> Echte IDE mit Erweiterrung für Arduino
