@@ -4,6 +4,7 @@
  *  UND Schreibe alle 1000ms den aktuellen Wert in die Console.
  *  UND Lese alle 50ms einen Analogen Pin ein (10 Bit, 4 cycles(ESP32 spezifish)) und schreibe das Ergebnis in die Console
  *  Wichtig: Die LED muss weiterhin durchgänig faden.
+ *  UND Wenn der button gedrückt wird soll in der Seriellenausgabe sofort an/aus stehen(Toggleswitch).
  *  
  *  Tipp: delay() sollte nicht verwendet werden.
  *  
@@ -19,14 +20,19 @@
  *  
  */
 #include <Ramp.h>                             // include library
+#define BUTTON_PIN 0
 
 ramp myRamp;                               // new int ramp object
 int analogPin = 34;
+long lastRun = 0;
+boolean toggleswitch = false;
+boolean isPressedMarker = false;
 
 void setup() {
   analogReadResolution(10);
   analogSetCycles(4);
   pinMode(LED_BUILTIN, OUTPUT);             // LED als ausgabe
+  pinMode(BUTTON_PIN, INPUT);
   myRamp.go(0);                            // setze anfangswert auf 0
   myRamp.go(255, 1000, LINEAR, BACKANDFORTH);      // gehe in 1000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
   // ESP32 Spezifisch
@@ -37,13 +43,22 @@ void setup() {
 }
 
 void loop() {
-  if (millis()%1000 == 0) {
+  if (millis()%1000 == 0) {// Klapt nur, wenn alle Aktion an sich weniger als 1 ms dauert
     Serial.println(myRamp.update());
-  }else if (millis()%50 == 0) {
+  }else if (millis()-(lastRun+50) >= 0) {// Klapt nur, wenn die aktion an sich wneiger als 1 ms dauert
+    lastRun += 50;                        // Wenn das Intervall 50ms sein soll hier oben die Zeit vor der ausführung setzen
     int analogValue = analogRead(analogPin);
     Serial.println(analogValue);
+    //lastRun += 50;                      // Wenn die Pause 50ms sein soll nach der ausführung setzen.
   }
   byte val = myRamp.update();                  // Hole die aktuelle Zahl
   //analogWrite(LED_BUILTIN, val);            // Arduino Style, nicht ESP32
   ledcWrite(0, val);                          // Setze den LEd Channel 0 auf die aktuelle Zahl
+  if (digitalRead(BUTTON_PIN) == LOW && !isPressedMarker) {// Wenn wir an dem Pin 0 Lesen und das GND Level anliegt, dann machen wir etwas
+    isPressedMarker = true;					// Durchlaufe das setzen nur einmal beim ersten drücken
+    toggleswitch = !toggleswitch;			// Wechsle die Varriable
+    Serial.println(toggleswitch);			// Schreibe (eigentliche Aufgabe)
+  } else if (digitalRead(BUTTON_PIN) == HIGH) {
+    isPressedMarker = false;				// Wenn der button nicht mehr gedrückt ist marker zurück setzen.
+  }
 }
