@@ -12,6 +12,7 @@
  * https://github.com/HelTecAutomation/Heltec_ESP32
  * 
  * Bilder können mit diesem Tool convertiert werden: https://www.mischianti.org/images-to-byte-array-online-converter-cpp-arduino/
+ * Weiterer hilfreicher Link: https://github.com/ThingPulse/esp8266-oled-ssd1306
 */
 
 #include "Arduino.h"
