@@ -1,0 +1,83 @@
+/*
+ * Alle Infos findest du hier: https://github.com/me-no-dev/ESPAsyncWebServer
+ * Dies ist das Beispiel simpleWebserver
+ * Aufgabe (Schwer):
+ * 1) Bringe das Beispiel zum laufen und Erweitere es, dass du die LED an und aus machen kannst.
+ * 2) Benutze die index.html indem du diein den SPIFFS lädst
+ * https://github.com/me-no-dev/ESPAsyncWebServer#serving-static-files
+ * https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/
+ * https://github.com/me-no-dev/arduino-esp32fs-plugin/releases/
+ *  Zeige Sesnordaten deiner Wahl auf der Webseite an.
+ * 3) Sende befehler über den schnelleren Websoket Port
+ * https://github.com/me-no-dev/ESPAsyncWebServer#async-websocket-plugin
+ * 
+ */
+
+ 
+#include <Arduino.h>
+#ifdef ESP32
+#include <WiFi.h>
+#include <AsyncTCP.h>
+#elif defined(ESP8266)
+#include <ESP8266WiFi.h>
+#include <ESPAsyncTCP.h>
+#endif
+#include <ESPAsyncWebServer.h>
+
+AsyncWebServer server(80);
+
+const char* ssid = "YOUR_SSID";
+const char* password = "YOUR_PASSWORD";
+
+const char* PARAM_MESSAGE = "message";
+
+void notFound(AsyncWebServerRequest *request) {
+    request->send(404, "text/plain", "Not found");
+}
+
+void setup() {
+
+    Serial.begin(115200);
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, password);
+    if (WiFi.waitForConnectResult() != WL_CONNECTED) {
+        Serial.printf("WiFi Failed!\n");
+        return;
+    }
+
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+
+    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(200, "text/plain", "Hello, world");
+    });
+
+    // Send a GET request to <IP>/get?message=<message>
+    server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
+        String message;
+        if (request->hasParam(PARAM_MESSAGE)) {
+            message = request->getParam(PARAM_MESSAGE)->value();
+        } else {
+            message = "No message sent";
+        }
+        request->send(200, "text/plain", "Hello, GET: " + message);
+    });
+
+    // Send a POST request to <IP>/post with a form field message set to <message>
+    server.on("/post", HTTP_POST, [](AsyncWebServerRequest *request){
+        String message;
+        if (request->hasParam(PARAM_MESSAGE, true)) {
+            message = request->getParam(PARAM_MESSAGE, true)->value();
+        } else {
+            message = "No message sent";
+        }
+        request->send(200, "text/plain", "Hello, POST: " + message);
+    });
+
+    server.onNotFound(notFound);
+
+    server.begin();
+}
+
+void loop() {
+}
