@@ -7,6 +7,11 @@
  *  UND Wenn der button gedrückt wird soll in der Seriellenausgabe sofort an/aus stehen(Toggleswitch).
  *  
  *  Tipp: delay() sollte nicht verwendet werden.
+ *  Verwende Interrpts, aber mache in der ISR nicht die Aufgaben. ISR müssen kurz sein.
+ *  Mit hilfe von booleschen vaiiablen, die du in einem interrupts setzt,
+ *  kannst du in dem Loop aktionen einmalig ausführen lassen, wie in dem Beispiel.
+ *  Die Funktionen sind auch schon geschrieben, verstehe sie und baue die fehlenden
+ *  Aufrufe.
  *  
  *  Links:
  *  https://www.arduino.cc/reference/en/libraries/ramp/
@@ -17,22 +22,42 @@
  *  https://www.arduino.cc/reference/de/language/structure/arithmetic-operators/modulo/
  *  https://www.arduino.cc/reference/de/language/structure/control-structure/else/
  *  https://randomnerdtutorials.com/esp32-adc-analog-read-arduino-ide/
+ *  https://lastminuteengineers.com/handling-esp32-gpio-interrupts-tutorial/
+ *  https://www.arduino.cc/reference/de/language/variables/variable-scope-qualifiers/volatile/
+ *  https://techtutorialsx.com/2017/10/07/esp32-arduino-timer-interrupts/
  *  
  */
 #include <Ramp.h>                             // include library
-#define BUTTON_PIN 0
+#define BUTTONPIN 0
 
 ramp myRamp;                               // new int ramp object
 int analogPin = 34;
-long lastRun = 0;
-boolean toggleswitch = false;
-boolean isPressedMarker = false;
+volatile boolean onOff = false;
+volatile boolean triggerColsole = false;
+volatile boolean trigerAnalogRead = false;
+volatile boolean triggerButton = false;
+hw_timer_t * timer = NULL;
+hw_timer_t * timer2 = NULL;
+
+void IRAM_ATTR buttonIsFalling() {
+  triggerButton = true;
+  onOff = !onOff;
+}
+
+void IRAM_ATTR startAnalogReading() {
+  trigerAnalogRead = true;
+}
+
+void IRAM_ATTR startConsoleWriting() {
+  triggerColsole = true;
+}
+
+
 
 void setup() {
   analogReadResolution(10);
   analogSetCycles(4);
   pinMode(LED_BUILTIN, OUTPUT);             // LED als ausgabe
-  pinMode(BUTTON_PIN, INPUT);
   myRamp.go(0);                            // setze anfangswert auf 0
   myRamp.go(255, 1000, LINEAR, BACKANDFORTH);      // gehe in 1000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
   // ESP32 Spezifisch
@@ -40,25 +65,39 @@ void setup() {
                                             // mit einer Ferequenz von 5000Hz und einer 8 bit (0-255) auflösung funktionieren soll
   ledcAttachPin(LED_BUILTIN, 0);            // Sage der Hardware, das Pin 25 (LED) mit Channel 1 gesteuert werden soll.
   Serial.begin(115200);                     // Schneler und braucht deshalb weniger Zeit
+  pinMode(BUTTONPIN, INPUT);
+  attachInterrupt(BUTTONPIN, buttonIsFalling, FALLING);
+  timer = timerBegin(0, 80, true);// Timer mit index 0 von 4 mit einem prescaler von 80 hochzählend
+  // Der ESP32 hat 80 MHz auf seiner clock mit dem Prescaler 80 wir reduzieren unseren Timer auf 1MHz
+  // 1 000 000 mal die Sekunde, alsoe jede Microsekund
+  timerAttachInterrupt(timer, &startAnalogReading, true);
+  // Dem Timer wird der Pointer zu unserer ISR übergeben
+  timerAlarmWrite(timer, 50000, true);
+  // Wir sagen die Funktion sol alle 50000 microsekunden, also alle 50 ms aufgerufen werden.
+  timerAlarmEnable(timer); // Wir aktiviren alles
+  // Benutze gerne Timer 1,2,3 für deine anderen Aufgaben.
+  
+  timer2 = timerBegin(1, 80, true);
+  timerAttachInterrupt(timer2, &startConsoleWriting, true);
+  timerAlarmWrite(timer2, 1000000, true);
+  timerAlarmEnable(timer2);
 }
 
 void loop() {
-  if (millis()%1000 == 0) {// Klapt nur, wenn alle Aktion an sich weniger als 1 ms dauert
+  if (triggerColsole) {
+    triggerColsole = false;
     Serial.println(myRamp.update());
-  }else if (millis()-(lastRun+50) >= 0) {// Klapt nur, wenn die aktion an sich wneiger als 1 ms dauert
-    lastRun += 50;                        // Wenn das Intervall 50ms sein soll hier oben die Zeit vor der ausführung setzen
+  }
+  if (trigerAnalogRead) {
+    trigerAnalogRead = false;
     int analogValue = analogRead(analogPin);
     Serial.println(analogValue);
-    //lastRun += 50;                      // Wenn die Pause 50ms sein soll nach der ausführung setzen.
+  }
+  if (triggerButton) {
+    triggerButton = false;
+    Serial.println(onOff);
   }
   byte val = myRamp.update();                  // Hole die aktuelle Zahl
   //analogWrite(LED_BUILTIN, val);            // Arduino Style, nicht ESP32
   ledcWrite(0, val);                          // Setze den LEd Channel 0 auf die aktuelle Zahl
-  if (digitalRead(BUTTON_PIN) == LOW && !isPressedMarker) {// Wenn wir an dem Pin 0 Lesen und das GND Level anliegt, dann machen wir etwas
-    isPressedMarker = true;					// Durchlaufe das setzen nur einmal beim ersten drücken
-    toggleswitch = !toggleswitch;			// Wechsle die Varriable
-    Serial.println(toggleswitch);			// Schreibe (eigentliche Aufgabe)
-  } else if (digitalRead(BUTTON_PIN) == HIGH) {
-    isPressedMarker = false;				// Wenn der button nicht mehr gedrückt ist marker zurück setzen.
-  }
 }

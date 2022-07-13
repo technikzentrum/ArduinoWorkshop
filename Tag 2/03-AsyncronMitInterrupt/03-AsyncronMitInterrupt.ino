@@ -8,6 +8,10 @@
  *  
  *  Tipp: delay() sollte nicht verwendet werden.
  *  Verwende Interrpts, aber mache in der ISR nicht die Aufgaben. ISR müssen kurz sein.
+ *  Mit hilfe von booleschen vaiiablen, die du in einem interrupts setzt,
+ *  kannst du in dem Loop aktionen einmalig ausführen lassen, wie in dem Beispiel.
+ *  Die Funktionen sind auch schon geschrieben, verstehe sie und baue die fehlenden
+ *  Aufrufe.
  *  
  *  Links:
  *  https://www.arduino.cc/reference/en/libraries/ramp/

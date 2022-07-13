@@ -6,7 +6,9 @@
  *  Wichtig: Die LED muss weiterhin durchgänig faden.
  *  UND Wenn der button gedrückt wird soll die LED sofort an/aus gehen(Toggleswitch).
  *  
- *  Tipp: delay() sollte nicht verwendet werden.
+ *  Tipp: delay() sollte nicht verwendet werden, aber du kannst die merken wie viel Zeit
+ *  vergeht indem du millis() aufrufst, dies gibet dir die millisekunden als long zurück, 
+ *  welche das System schon läuft. So kannst du die wartezeiten realisieren, ohne zu blockieren.
  *  
  *  Links:
  *  https://www.arduino.cc/reference/en/libraries/ramp/
