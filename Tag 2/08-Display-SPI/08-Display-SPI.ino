@@ -11,7 +11,7 @@
  * this project also realess in GitHub:
  * https://github.com/HelTecAutomation/Heltec_ESP32
  * 
- * Bilder können mit diesem Tool convertiert werden: https://www.mischianti.org/images-to-byte-array-online-converter-cpp-arduino/
+ * Bilder können mit diesem Tool convertiert werden: https://www.online-utility.org/image/convert/to/XBM
  * Weiterer hilfreicher Link: https://github.com/ThingPulse/esp8266-oled-ssd1306
 */
 
@@ -48,7 +48,7 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
 }
 
 void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
-  display->drawXbm(x, y + 5, TZL_LOGO_width, TZL_LOGO_height, TZL_LOGO);
+  display->drawXbm(x, y, TZL_LOGO_width, TZL_LOGO_height, TZL_LOGO);
 }
 
 void drawFrame4(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
