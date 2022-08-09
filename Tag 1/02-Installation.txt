@@ -12,6 +12,10 @@ Arduino IDE (2) https://www.arduino.cc/en/software (weiter unten)
 --> https://arduino.esp8266.com/stable/package_esp8266com_index.json
 --> https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series/releases/download/0.0.5/package_heltec_esp32_index.json
 
+Bitte jetzt auf "Werkzeuge"->"Bord:****"->"ESP32 Arduino"->"Heltec WIFI LORA 32(V2)" klicken.
+Das Bord bitte über USB anschließen und dann auf den Port auswählen:
+"Werkzeuge"->"Port"
+
 
 Visual Studio Code: https://code.visualstudio.com/
 + PlatformIO: https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide

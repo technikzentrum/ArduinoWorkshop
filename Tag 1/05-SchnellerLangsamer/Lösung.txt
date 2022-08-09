@@ -1,13 +1,12 @@
-// the setup function runs once when you press reset or power the board
 #define BUTTON_PIN 0		// Der Knopf liegt auf PIN 0
 int delay_time = 1000;		// Wir starten mit einer Sekunde an und aus Zeit
+
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);	// Den LED Pin 25 Setzen wir als Ausgabe Pin
   pinMode(BUTTON_PIN, INPUT); // Hardware Pullup, Closed == GND Level (LOW)
 }
 
-// the loop function runs over and over again forever
 void loop() {
   if (digitalRead(BUTTON_PIN) == LOW) {	//Wenn der Knopf gedrückt ist, dann machen wir was
     if (delay_time < 10) {				// Wenn die Wartezeit unter 10ms ist, dann 

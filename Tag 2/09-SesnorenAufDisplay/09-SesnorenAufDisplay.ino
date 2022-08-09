@@ -13,7 +13,7 @@
    Verwendung von Emums: https://www.programiz.com/c-programming/c-enumeration
    Display enums und Funktionen: https://github.com/ThingPulse/esp8266-oled-ssd1306/blob/master/src/OLEDDisplay.h
    Funktionsbeispiele: https://www.sabulo.com/sb/esp32-development-board/how-to-use-the-heltec-oled-display-on-the-esp32/
-
+   Dial: https://www.instructables.com/Add-an-Arduino-based-Optical-Tachometer-to-a-CNC-R/
 */
 
 #include "Arduino.h"
