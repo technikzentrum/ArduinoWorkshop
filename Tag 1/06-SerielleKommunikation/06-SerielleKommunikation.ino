@@ -5,8 +5,8 @@
   Quelle: https://www.arduino.cc/reference/de/language/functions/communication/serial/read/
   Angepasst durch Marco Gabrecht
 
-  Bitte passe dieses Programm so an, dass wenn man ein + Schreibt
-  die LED 10% schneller Blinkt und bei - 10% langsamer.
+  Bitte passe dieses Programm so an, dass wenn man ein "+" Schreibt
+  die LED 10% schneller Blinkt und bei "-" 10% langsamer.
   Bonus: Wenn man eine Zahl schreibt, soll die wartezeit auf diese Zahl gesetzt werden.
   Negative eingaben müssen verhindert werden.
   Hilfreiche Links:
