@@ -9,7 +9,7 @@ void setup() {
 void loop() {
   if (digitalRead(BUTTON_PIN) == LOW) {// Wenn wir an dem Pin 0 Lesen und das GND Level anliegt, dann machen wir etwas
     digitalWrite(LED_BUILTIN, HIGH);   // LED an
-  } else {                             // Wenn die Bedinung oben nicht erfüllt ist
+  } else {                             // Wenn die Bedingung oben nicht erfüllt ist
     digitalWrite(LED_BUILTIN, LOW);    // LED aus
   }
 }
