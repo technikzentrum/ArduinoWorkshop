@@ -2,6 +2,9 @@
  * Dies ist das Basisbeispiel um Analoge werte einzulesen und in der Console auszugaben,
  * deine Aufgabe ist es mit dem Datenblatt den Wert auf eine Physikalische größe abzubilden.
  * Benutze gerne die map() funktion.
+ * 
+ * Wichtigster Link (Datenblatt): https://cdn.shopify.com/s/files/1/1509/1638/files/KY-013_Thermistor_Sensor_Modul_Datenblatt.pdf?9800502722103794008
+ * 
   AnalogReadSerial
 
   Reads an analog input on pin 0, prints the result to the Serial Monitor.

@@ -11,7 +11,7 @@
   +, -, *, / -> "Du hast * geschrieben" (wobei * für die Eingabe steht)
   Hallo -> "Hallo <NAME>"
   Ich heiße <NAME> -> Speichert den Namen in der Variablen <NAME>
-  <INT> -> <INT> + 1
+  <INT> -> <INT> + 1 (Also, wenn du eine Zahl schriebst, dann soll die Zahl plus 1 zurückgegeben werden)
   LED AN -> Macht die LED an
   LED AUS -> Macht die LED aus
   Hilfreiche Links:
