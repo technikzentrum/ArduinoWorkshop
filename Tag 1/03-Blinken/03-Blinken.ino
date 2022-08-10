@@ -1,12 +1,12 @@
 /*
  * Beim Programmieren lernt man meistens zu erst das "Hello World", wo man sich diesen Text ausgeben lässt, bei µC ist die Textausgabe schon sehr komplex, deshalb beginnen wir mit einer LED, die Blinkt.
 
-Arduino besitzt immer einen einsprungpunkt(Setup) wo er beginnt Befehle auszuführen.
-Danach Springt er immer in einen Dauerschleife(Loop), wo er seine von dir Programmierte Aufgabe erfüllt.
+Arduino besitzt immer einen Einsprungpunkt(Setup) wo er beginnt Befehle auszuführen.
+Danach Springt er immer in einen Dauerschleife(Loop), wo er seine von dir programmierte Aufgabe erfüllt.
 
 Öffnet das Beispiel (03-Blinken.ino)
 
-Geht unter "Werkzeuge"->"Bord: ****" -> "Bordverwalter" nd gebt "ESP32" ein.
+Geht unter "Werkzeuge"->"Bord: ****" -> "Bordverwalter" und gebt "ESP32" ein.
 Installiert "Heltec ESP32 Series DEV-Bords"
 Wählt bei "Werkzeuge"->"Bord: ****" -> "WiFi LoRa 32(V2)" aus.
 
@@ -15,7 +15,7 @@ Lest euch das Programm durch und versucht es zu verstehen.
 Geht auf "Werkzeuge"->"Port" und schaut euch alle Ports an, die gerade verfügbar sind.
 Steckt dann das Bord per USB an und wählt den Port aus, der neu hinzugekommen ist.
 
-Drückt dann auf "->" um das Programm zu kompeliren und hochzuladen.
+Drückt dann auf "->" um das Programm zu kompelieren und hochzuladen.
 
 Nun sollte die weiße LED Blinken.
   Blink
