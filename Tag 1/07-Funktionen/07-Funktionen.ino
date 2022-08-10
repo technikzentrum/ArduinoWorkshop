@@ -5,12 +5,12 @@
   Quelle: https://www.arduino.cc/reference/de/language/functions/communication/serial/read/
   Angepasst durch Marco Gabrecht
 
-  Bitte passe dieses Programm so an, dass man folgende ausgabe für folgende eigabe bekommt:
+  Bitte passe dieses Programm so an, dass man folgende Ausgabe für folgende Eingabe bekommt:
   Test -> "Dies ist ein Test"
   Ping -> "Pong"
-  +, -, *, / -> "Du hast * geschrieben" (wobei * für die eingabe steht)
+  +, -, *, / -> "Du hast * geschrieben" (wobei * für die Eingabe steht)
   Hallo -> "Hallo <NAME>"
-  Ich heiße <NAME> -> Speichert den Namen in der Varribale <NAME>
+  Ich heiße <NAME> -> Speichert den Namen in der Variablen <NAME>
   <INT> -> <INT> + 1
   LED AN -> Macht die LED an
   LED AUS -> Macht die LED aus
