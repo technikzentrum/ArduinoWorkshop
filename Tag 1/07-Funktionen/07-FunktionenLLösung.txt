@@ -36,7 +36,9 @@
 String meinName = "Name";
 
 void rechenzeichen(String eingabe) {
-  Serial.println(eingabe.substring(0, 1));
+  Serial.print ("Du hast ");
+  Serial.print (eingabe.substring(0, 1));
+  Serial.println (" geschrieben");
 }
 
 void hallo() {
