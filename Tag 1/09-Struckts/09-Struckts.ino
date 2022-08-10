@@ -16,7 +16,7 @@
 };
 
 void setup() {
-   Serial.begin(115200);
+   Serial.begin(9600);
    Serial.println();
    student A = {"Max Müller", 25};  // Erstelle einen student, schnelle schreibweise
    Serial.println(A.name);          // komme an die Variable name von student A
@@ -36,3 +36,7 @@ void loop() {
    Serial.print(B.alter);
    Serial.println(" Jahre)");
 }
+
+// Gibt als Lösung nur folgendes aus:
+// Spitzname des Studenten: Wie lautet die Telefonnummer von : Name des Studenten: Wie alt ist :  (0 Jahre)
+// Auch die Lösung funktioniert nicht. Man kann keine Eingaben tätigen. Das Beispiel muss insgesamt überarbeitet werden.
