@@ -1,9 +1,9 @@
 /*
-  Dies ist das Blink Besispiel aus dem Ersten Programmier Thema
-  Bitte erweiterre dieses um die Funktion, dass immer wenn man den Knopf Drückt,
+  Dies ist das Blink Beispiel aus dem ersten Programmierthema
+  Bitte erweitere dieses um die Funktion, dass immer wenn man den Knopf drückt,
   die LED 10% langsamer Blinkt, als vorher und wenn man ihn nicht drückt bei jedem durchlauf 10% schneller.
-  Bedenke bitte auch Randbedinungen. (min max + Prezisionslimmits)
-  Du wirst eine Varriable benutzen müssen.
+  Bedenke bitte auch Randbedinungen. (min max + Präzisionslimits)
+  Du wirst eine Variable benutzen müssen.
   https://www.arduino.cc/en/Tutorial/BuiltInExamples/Blink
   Hilfreiche Dokumentation:
   https://www.arduino.cc/reference/de/language/variables/data-types/int/
