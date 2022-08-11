@@ -42,3 +42,5 @@ void loop() {
   //analogWrite(LED_BUILTIN, val);            // Arduino Style, nicht ESP32
   ledcWrite(0, val);                          // Setze den LEd Channel 0 auf die aktuelle Zahl
 }
+
+// Lösung hat Kompilierungsfehler, läuft nicht.
