@@ -1,4 +1,4 @@
-/* Beispiel aus der Bibiothek (angepasst duch Marco Gabrecht)
+/* Beispiel aus der Bibliothek (angepasst duch Marco Gabrecht)
  *  Dies ist die Lösung von dem RAMP Beispiel.
  *  Bitte passe diese Beispiel so an, dass die LED innerhalb von einer Sekunde auf 100% geht und danach wieder auf 0
  *  UND Schreibe alle 1000ms den aktuellen Wert in die Console.
@@ -6,9 +6,9 @@
  *  Wichtig: Die LED muss weiterhin durchgänig faden.
  *  UND Wenn der button gedrückt wird soll die LED sofort an/aus gehen(Toggleswitch).
  *  
- *  Tipp: delay() sollte nicht verwendet werden, aber du kannst die merken wie viel Zeit
- *  vergeht indem du millis() aufrufst, dies gibet dir die millisekunden als long zurück, 
- *  welche das System schon läuft. So kannst du die wartezeiten realisieren, ohne zu blockieren.
+ *  Tipp: delay() sollte nicht verwendet werden, aber du kannst dir merken wie viel Zeit
+ *  vergeht indem du millis() aufrufst, dies gibt dir die Millisekunden als long zurück, 
+ *  welche das System schon läuft. So kannst du die Wartezeiten realisieren, ohne zu blockieren.
  *  
  *  Links:
  *  https://www.arduino.cc/reference/en/libraries/ramp/
@@ -28,12 +28,12 @@ ramp myRamp;                               // new int ramp object
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);             // LED als ausgabe
   myRamp.go(0);                            // setze anfangswert auf 0
-  myRamp.go(255, 1000, LINEAR, BACKANDFORTH);      // gehe in 1000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
+  myRamp.go(255, 1000, LINEAR, BACKANDFORTH);      // gehe in 1000ms auf 255 linear und das in einem Vorwärts- und Rückwärtskreislauf.
   // ESP32 Spezifisch
-  ledcSetup(0, 5000, 8);                    // Sage der Hardware, dass der LED Channel 0
-                                            // mit einer Ferequenz von 5000Hz und einer 8 bit (0-255) auflösung funktionieren soll
+  ledcSetup(0, 5000, 8);                    // Sage der Hardware, dass der LED Channel 0 ist.
+                                            // mit einer Frequenz von 5000Hz und einer 8 bit (0-255) Auflösung funktionieren soll
   ledcAttachPin(LED_BUILTIN, 0);            // Sage der Hardware, das Pin 25 (LED) mit Channel 1 gesteuert werden soll.
-  Serial.begin(115200);                     // Schneler und braucht deshalb weniger Zeit
+  Serial.begin(115200);                     // Schneller und braucht deshalb weniger Zeit
 }
 
 void loop() {
