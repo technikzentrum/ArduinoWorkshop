@@ -1,7 +1,7 @@
 /*
- * Dieses Beispiel zeigt die verwendng von I2C und der Adressen, um ein Gerät zu finden.
- * Für die Meisten Sensoren gibt es Libarys, die die kommunikation übenrehmen.
- * Suche eine Libary und steuerre den Luftdrucksensor an und erhalte seine Messdaten.
+ * Dieses Beispiel zeigt die Verwendung von I2C und der Adressen, um ein Gerät zu finden.
+ * Für die Meisten Sensoren gibt es Libarys, die die kommunikation übernehmen.
+ * Suche eine Libary und steuere den Luftdrucksensor an und erhalte seine Messdaten.
  * Wenn das geklappt hat hast du deine Aufgabe erfüllt.
  */
  
