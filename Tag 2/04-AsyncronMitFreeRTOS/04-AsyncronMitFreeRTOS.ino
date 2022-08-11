@@ -6,9 +6,9 @@
  *  UND Wenn der button gedrückt wird soll die LED sofort an/aus gehen(Toggleswitch).
  *  
  *  Tipp: delay() kann verwendet werden, besser ist vTaskDelay(50 / portTICK_PERIOD_MS);, was das selbe macht nur mit FreeRTOS
- *  Umsetzung mit FreeRTOS, du kannst Task (sozusagen einzelne Programme) schrieben, 
- *  die vom Betribssystem verwaltet werden und paralel oder abwechselnd aufgerufen 
- *  werden, somit kannst du für jede Aufgabe ein eigenes einfaches Programm schrieben.
+ *  Umsetzung mit FreeRTOS, du kannst Task (sozusagen einzelne Programme) schreiben, 
+ *  die vom Betriebssystem verwaltet werden und parallel oder abwechselnd aufgerufen 
+ *  werden, somit kannst du für jede Aufgabe ein eigenes einfaches Programm schreiben.
  *  
  *  Links:
  *  https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
@@ -130,3 +130,5 @@ void TaskButton( void *pvParameters ) {
     Serial.println(toggleswitch);     // Schreibe (eigentliche Aufgabe)
   }
 }
+
+// LÖSUNG läuft nicht: 'analogSetCycles' was not declared in this scope
