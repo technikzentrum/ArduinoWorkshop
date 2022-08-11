@@ -3,7 +3,7 @@
  * Es kann als Objekte ohne Funktionen gesehen werden.
  * Pointer sind Zeiger auf ein Objekt, sowas wie die Adresse eines Gebäudes
  * Aufgabe: Lerne Pointer kennen und verstehe "&" "*" "." "->"
- * UND Erstelle eine kopier funktion, womit man eine unabhänige Kopie erhält.
+ * UND Erstelle eine Kopierfunktion, womit man eine unabhängige Kopie erhält.
  * 
  * Beispiel von: https://www.tutorialspoint.com/structs-in-arduino-program#
  * 
@@ -12,7 +12,7 @@
  * https://www.arduino.cc/reference/de/language/functions/communication/serial/parseint/
  */
 
- struct student{    // Erstelle eine Sammlung von Varablen und gebe ihnen einen neu erstellten Datentypen
+ struct student{    // Erstelle eine Sammlung von Variablen und gebe ihnen einen neu erstellten Datentypen
    String name;     // Der Datentype student bekommt das Attribut Name vom Type String
    int alter;       // Und alter vom Type int
 };
