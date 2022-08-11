@@ -7,9 +7,9 @@
  *  UND Wenn der button gedrückt wird soll in der Seriellenausgabe sofort an/aus stehen(Toggleswitch).
  *  
  *  Tipp: delay() sollte nicht verwendet werden.
- *  Verwende Interrpts, aber mache in der ISR nicht die Aufgaben. ISR müssen kurz sein.
- *  Mit hilfe von booleschen vaiiablen, die du in einem interrupts setzt,
- *  kannst du in dem Loop aktionen einmalig ausführen lassen, wie in dem Beispiel.
+ *  Verwende Interrpts, aber mache in der ISR ( WAS IST EINE ISR?) nicht die Aufgaben. ISR müssen kurz sein.
+ *  Mit Hilfe von booleschen Variablen, die du in einem Interrupt setzt,
+ *  kannst du in dem Loop Aktionen einmalig ausführen lassen, wie in dem Beispiel.
  *  Die Funktionen sind auch schon geschrieben, verstehe sie und baue die fehlenden
  *  Aufrufe.
  *  
@@ -96,3 +96,5 @@ void loop() {
   //analogWrite(LED_BUILTIN, val);            // Arduino Style, nicht ESP32
   ledcWrite(0, val);                          // Setze den LEd Channel 0 auf die aktuelle Zahl
 }
+
+//Lösung hat beim Kompilieren FEHLERMELDUNG
