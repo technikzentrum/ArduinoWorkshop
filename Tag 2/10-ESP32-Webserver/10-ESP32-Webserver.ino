@@ -7,7 +7,7 @@
  * https://github.com/me-no-dev/ESPAsyncWebServer#serving-static-files
  * https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/
  * https://github.com/me-no-dev/arduino-esp32fs-plugin/releases/
- *  Zeige Sesnordaten deiner Wahl auf der Webseite an.
+ * 2) Zeige Sesnordaten deiner Wahl auf der Webseite an.
  * 3) Sende befehle über den schnelleren Websoket Port
  * https://github.com/me-no-dev/ESPAsyncWebServer#async-websocket-plugin
  * 
