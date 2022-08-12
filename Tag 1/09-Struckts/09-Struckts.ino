@@ -10,9 +10,9 @@
    https://www.arduino.cc/reference/de/language/functions/communication/serial/parseint/
 */
 
- struct student{    // Erstelle eine Sammlung von Varablen udn gebe ihnen einen neu erstellten Datentypen
-   String name;     // Der Datentype student bekommt das Atribut Name vom Type String
-   int alter;       // Und alter vom Type int
+ struct student{    // Erstelle eine Sammlung von Variablen und gebe ihnen einen neu erstellten Datentypen
+   String name;     // Der Datentyp student bekommt das Atribut Name vom Typ String
+   int alter;       // Und alter vom Typ int
 };
 
 void setup() {
@@ -22,7 +22,7 @@ void setup() {
   }
   delay(1000);// warte auf die Serielleverbindung.
   Serial.println();
-  student A = {"Max Müller", 25, "Maxi", "+491523498674"};  // Erstele einen student, schnelle schriebweise
+  student A = {"Max Müller", 25, "Maxi", "+491523498674"};  // Erstelle einen student, schnelle schreibweise
   Serial.println(A.name);          // komme an die Variable name von student A
   Serial.println(A.alter);
   Serial.println("");

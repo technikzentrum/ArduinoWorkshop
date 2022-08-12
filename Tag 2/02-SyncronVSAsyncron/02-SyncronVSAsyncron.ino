@@ -2,7 +2,7 @@
  *  Dies ist die Lösung von dem RAMP Beispiel.
  *  Bitte passe diese Beispiel so an, dass die LED innerhalb von einer Sekunde auf 100% geht und danach wieder auf 0
  *  UND Schreibe alle 1000ms den aktuellen Wert in die Console.
- *  UND Lese alle 50ms einen Analogen Pin ein (10 Bit, 4 cycles(ESP32 spezifish)) und schreibe das Ergebnis in die Console
+ *  UND Lese alle 50ms einen Analogen Pin ein (10 Bit) und schreibe das Ergebnis in die Console
  *  Wichtig: Die LED muss weiterhin durchgänig faden.
  *  UND Wenn der button gedrückt wird soll die LED sofort an/aus gehen(Toggleswitch).
  *  
