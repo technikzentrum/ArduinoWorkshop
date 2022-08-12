@@ -19,7 +19,7 @@
 #include <SPIFFS.h>
 #include <ESPmDNS.h>
 #include <WiFi.h>
-#include <AsyncTCP.h>
+#include <AsyncTCP.h>      //FEHLERMELDUNG, da Library fehlte. Library muss vorher installiert werden. Habe die passende Library nicht gefunden. Es gibt ähnliche, aber nicht genau die...
 #elif defined(ESP8266)
 #include <ESP8266WiFi.h>
 #include <ESPAsyncTCP.h>
