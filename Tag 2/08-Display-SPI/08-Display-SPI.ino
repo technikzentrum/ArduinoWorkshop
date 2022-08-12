@@ -16,7 +16,7 @@
 */
 
 #include "Arduino.h"
-#include "heltec.h"
+#include "heltec.h"             //FEHLERMELDUNG: heltec.h: No such file or directory , vermutlich muss die Library vorher geladen werden, Jupp die fehlende Library war es.
 #include "oled/OLEDDisplayUi.h"
 #include "images.h"
 
