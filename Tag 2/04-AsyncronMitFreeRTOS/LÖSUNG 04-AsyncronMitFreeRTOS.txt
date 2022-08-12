@@ -1,8 +1,8 @@
 /* Beispiel aus der Bibiothek (angepasst duch Marco Gabrecht)
  *  Dies ist die Lösung von dem RAMP Beispiel.
- *  Bitte lese dieses Beispiel durch und verstehe wie, die LED innerhalb von einer Sekunde auf 100% geht und danach wieder auf 0
+ *  Bitte lese dieses Beispiel durch und verstehe wie, die LED innerhalb von 5 Sekunde auf 100% geht und danach wieder auf 0
  *  UND Schreibe alle 1000ms den aktuellen Wert in die Console.
- *  UND Lese alle 50ms einen Analogen Pin ein (10 Bit, 4 cycles(ESP32 spezifish)) und schreibe das Ergebnis in die Console
+ *  UND Lese alle 50ms einen Analogen Pin ein (10 Bit) und schreibe das Ergebnis in die Console
  *  UND Wenn der button gedrückt wird soll die LED sofort an/aus gehen(Toggleswitch).
  *  
  *  Tipp: delay() kann verwendet werden, besser ist vTaskDelay(50 / portTICK_PERIOD_MS);, was das selbe macht nur mit FreeRTOS
@@ -92,8 +92,7 @@ void loop() {
 void TaskFade( void *pvParameters ) {
   pinMode(LED_BUILTIN, OUTPUT);             // LED als ausgabe
   myRamp.go(0);                            // setze anfangswert auf 0
-  myRamp.go(255, 1000, LINEAR, BACKANDFORTH);      // gehe in 1000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
-  // ESP32 Spezifisch
+  myRamp.go(255, 5000, LINEAR, BACKANDFORTH);      // gehe in 5000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
   ledcSetup(0, 5000, 8);                    // Sage der Hardware, dass der LED Channel 0
                                             // mit einer Ferequenz von 5000Hz und einer 8 bit (0-255) auflösung funktionieren soll
   ledcAttachPin(LED_BUILTIN, 0);            // Sage der Hardware, das Pin 25 (LED) mit Channel 1 gesteuert werden soll.
@@ -106,7 +105,6 @@ void TaskFade( void *pvParameters ) {
 void TaskAnalogRead( void *pvParameters ) {
   int analogPin = 34;
   analogReadResolution(10);
-  analogSetCycles(4);
   for (;;) {
     int analogValue = analogRead(analogPin);
     Serial.println(analogValue);
@@ -127,6 +125,6 @@ void TaskButton( void *pvParameters ) {
   for (;;) {
     vTaskSuspend( NULL );               // Beende den Task bis er geweckt wird
     toggleswitch = !toggleswitch;      // Wechsle die Varriable
-    Serial.println(toggleswitch);     // Schreibe (eigentliche Aufgabe)
+    Serial.println(toggleswitch?"An":"Aus");     // Schreibe (eigentliche Aufgabe)
   }
 }

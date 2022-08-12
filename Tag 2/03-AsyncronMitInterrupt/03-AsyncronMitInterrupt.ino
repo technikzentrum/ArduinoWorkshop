@@ -89,11 +89,9 @@ void loop() {
   }
   if (triggerButton) {
     triggerButton = false;
-    Serial.println(onOff);
+    Serial.println(onOff?"An":"Aus");
   }
   byte val = myRamp.update();                  // Hole die aktuelle Zahl
   //analogWrite(LED_BUILTIN, val);            // Arduino Style, nicht ESP32
-  ledcWrite(0, val);                          // Setze den LEd Channel 0 auf die aktuelle Zahl
+  ledcWrite(0, val);                          // Setze den LED Channel 0 auf die aktuelle Zahl
 }
-
-//Lösung hat beim Kompilieren FEHLERMELDUNG

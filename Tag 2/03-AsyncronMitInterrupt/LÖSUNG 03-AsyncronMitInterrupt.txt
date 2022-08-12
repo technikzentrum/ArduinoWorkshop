@@ -58,8 +58,7 @@ void setup() {
   analogReadResolution(10);
   pinMode(LED_BUILTIN, OUTPUT);             // LED als ausgabe
   myRamp.go(0);                            // setze anfangswert auf 0
-  myRamp.go(255, 5000, LINEAR, BACKANDFORTH);      // gehe in 1000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
-  // ESP32 Spezifisch
+  myRamp.go(255, 5000, LINEAR, BACKANDFORTH);      // gehe in 5000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
   ledcSetup(0, 5000, 8);                    // Sage der Hardware, dass der LED Channel 0
                                             // mit einer Ferequenz von 5000Hz und einer 8 bit (0-255) auflösung funktionieren soll
   ledcAttachPin(LED_BUILTIN, 0);            // Sage der Hardware, das Pin 25 (LED) mit Channel 1 gesteuert werden soll.
@@ -94,9 +93,9 @@ void loop() {
   }
   if (triggerButton) {
     triggerButton = false;
-    Serial.println(onOff);
+    Serial.println(onOff?"An":"Aus");
   }
   byte val = myRamp.update();                  // Hole die aktuelle Zahl
   //analogWrite(LED_BUILTIN, val);            // Arduino Style, nicht ESP32
-  ledcWrite(0, val);                          // Setze den LEd Channel 0 auf die aktuelle Zahl
+  ledcWrite(0, val);                          // Setze den LED Channel 0 auf die aktuelle Zahl
 }

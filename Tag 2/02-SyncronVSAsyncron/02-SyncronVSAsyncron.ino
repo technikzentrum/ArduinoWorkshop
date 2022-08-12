@@ -1,10 +1,10 @@
 /* Beispiel aus der Bibliothek (angepasst duch Marco Gabrecht)
  *  Dies ist die Lösung von dem RAMP Beispiel.
- *  Bitte passe diese Beispiel so an, dass die LED innerhalb von einer Sekunde auf 100% geht und danach wieder auf 0
+ *  Bitte passe diese Beispiel so an, dass die LED innerhalb von 5 Sekunde auf 100% geht und danach wieder auf 0
  *  UND Schreibe alle 1000ms den aktuellen Wert in die Console.
  *  UND Lese alle 50ms einen Analogen Pin ein (10 Bit) und schreibe das Ergebnis in die Console
  *  Wichtig: Die LED muss weiterhin durchgänig faden.
- *  UND Wenn der button gedrückt wird soll die LED sofort an/aus gehen(Toggleswitch).
+ *  UND Wenn der button gedrückt wird soll in der Seriellenausgabe sofort an/aus stehen(Toggleswitch).
  *  
  *  Tipp: delay() sollte nicht verwendet werden, aber du kannst dir merken wie viel Zeit
  *  vergeht indem du millis() aufrufst, dies gibt dir die Millisekunden als long zurück, 
@@ -24,11 +24,16 @@
 #include <Ramp.h>                             // include library
 
 ramp myRamp;                               // new int ramp object
+int analogPin = 34;
+long lastRun = 0;
+long lastRunConsole = 0;
+boolean toggleswitch = false;
+boolean isPressedMarker = false;
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);             // LED als ausgabe
   myRamp.go(0);                            // setze anfangswert auf 0
-  myRamp.go(255, 1000, LINEAR, BACKANDFORTH);      // gehe in 1000ms auf 255 linear und das in einem Vorwärts- und Rückwärtskreislauf.
+  myRamp.go(255, 5000, LINEAR, BACKANDFORTH);      // gehe in 5000ms auf 255 linear und das in einem Vorwärts- und Rückwärtskreislauf.
   // ESP32 Spezifisch
   ledcSetup(0, 5000, 8);                    // Sage der Hardware, dass der LED Channel 0 ist.
                                             // mit einer Frequenz von 5000Hz und einer 8 bit (0-255) Auflösung funktionieren soll
@@ -37,10 +42,8 @@ void setup() {
 }
 
 void loop() {
-  // deine Erweiterrung ...
+  // deine Erweiterrung ... Tipp: if (millis() >= (lastRunConsole + 1000)) {
   byte val = myRamp.update();                  // Hole die aktuelle Zahl
   //analogWrite(LED_BUILTIN, val);            // Arduino Style, nicht ESP32
   ledcWrite(0, val);                          // Setze den LEd Channel 0 auf die aktuelle Zahl
 }
-
-// Lösung hat Kompilierungsfehler, läuft nicht.

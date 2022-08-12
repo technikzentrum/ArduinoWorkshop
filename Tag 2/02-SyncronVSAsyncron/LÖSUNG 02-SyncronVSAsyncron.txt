@@ -1,6 +1,6 @@
 /* Beispiel aus der Bibiothek (angepasst duch Marco Gabrecht)
  *  Dies ist die Lösung von dem RAMP Beispiel.
- *  Bitte passe diese Beispiel so an, dass die LED innerhalb von einer Sekunde auf 100% geht und danach wieder auf 0
+ *  Bitte passe diese Beispiel so an, dass die LED innerhalb von 5 Sekunde auf 100% geht und danach wieder auf 0
  *  UND Schreibe alle 1000ms den aktuellen Wert in die Console.
  *  UND Lese alle 50ms einen Analogen Pin ein (10 Bit) schreibe das Ergebnis in die Console
  *  Wichtig: Die LED muss weiterhin durchgänig faden.
@@ -25,6 +25,7 @@
 ramp myRamp;                               // new int ramp object
 int analogPin = 34;
 long lastRun = 0;
+long lastRunConsole = 0;
 boolean toggleswitch = false;
 boolean isPressedMarker = false;
 
@@ -33,7 +34,7 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);             // LED als ausgabe
   pinMode(BUTTON_PIN, INPUT);
   myRamp.go(0);                            // setze anfangswert auf 0
-  myRamp.go(255, 1000, LINEAR, BACKANDFORTH);      // gehe in 1000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
+  myRamp.go(255, 5000, LINEAR, BACKANDFORTH);      // gehe in 5000ms auf 255 linear und das in einem forwärts und rückwärts Kreislauf.
   // ESP32 Spezifisch
   ledcSetup(0, 5000, 8);                    // Sage der Hardware, dass der LED Channel 0
                                             // mit einer Ferequenz von 5000Hz und einer 8 bit (0-255) auflösung funktionieren soll
@@ -42,13 +43,14 @@ void setup() {
 }
 
 void loop() {
-  if (millis()%1000 == 0) {// Klapt nur, wenn alle Aktion an sich weniger als 1 ms dauert
+  if (millis() >= (lastRunConsole + 1000)) {
     Serial.println(myRamp.update());
-  }else if (millis()-(lastRun+50) >= 0) {// Klapt nur, wenn die aktion an sich wneiger als 1 ms dauert
-    lastRun += 50;                        // Wenn das Intervall 50ms sein soll hier oben die Zeit vor der ausführung setzen
+    lastRunConsole = millis() + 1000;
+  }else if (millis() >= (lastRun+50)) {
+    lastRun = millis() + 50;                        // Wenn das Intervall 50ms sein soll hier oben die Zeit vor der ausführung setzen
     int analogValue = analogRead(analogPin);
     Serial.println(analogValue);
-    //lastRun += 50;                      // Wenn die Pause 50ms sein soll nach der ausführung setzen.
+    //lastRun = millis() + 50;                      // Wenn die Pause 50ms sein soll nach der ausführung setzen.
   }
   byte val = myRamp.update();                  // Hole die aktuelle Zahl
   //analogWrite(LED_BUILTIN, val);            // Arduino Style, nicht ESP32
@@ -56,7 +58,7 @@ void loop() {
   if (digitalRead(BUTTON_PIN) == LOW && !isPressedMarker) {// Wenn wir an dem Pin 0 Lesen und das GND Level anliegt, dann machen wir etwas
     isPressedMarker = true;          // Durchlaufe das setzen nur einmal beim ersten drücken
     toggleswitch = !toggleswitch;     // Wechsle die Varriable
-    Serial.println(toggleswitch);     // Schreibe (eigentliche Aufgabe)
+    Serial.println(toggleswitch?"An":"Aus");     // Schreibe (eigentliche Aufgabe)
   } else if (digitalRead(BUTTON_PIN) == HIGH) {
     isPressedMarker = false;        // Wenn der button nicht mehr gedrückt ist marker zurück setzen.
   }
