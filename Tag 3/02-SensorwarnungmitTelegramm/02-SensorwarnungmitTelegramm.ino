@@ -134,9 +134,9 @@ void loop() {
     for (int i = 0; i < userCount; i++) {
       if (luftfeuchtigkeit >= schwellwert && !isOver) {
         isOver = true;
-        bot.sendMessage(String(users[i]), String("WARNUNG!\nTemperatur: " + String(t) + "\nLuftfeuchtigkeit: " + String(h)), "");
+        bot.sendMessage(String(users[i]), String("WARNUNG!\nTemperatur: " + String(temperatur) + "\nLuftfeuchtigkeit: " + String(luftfeuchtigkeit)), "");
       } else if (luftfeuchtigkeit < schwellwert && isOver) {
-        bot.sendMessage(String(users[i]), String("Entwarnung!\nTemperatur: " + String(t) + "\nLuftfeuchtigkeit: " + String(h)), "");
+        bot.sendMessage(String(users[i]), String("Entwarnung!\nTemperatur: " + String(temperatur) + "\nLuftfeuchtigkeit: " + String(luftfeuchtigkeit)), "");
       }
     }
   }
