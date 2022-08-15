@@ -1,5 +1,5 @@
 /*
- * Alle Infos findest du hier: https://github.com/me-no-dev/ESPAsyncWebServer
+ * Alle Infos findest du hier: https://github.com/me-no-dev/ESPAsyncWebServer (Auch wo du die Libarys her bekommst)
  * Dies ist das Beispiel ESP_AsyncFSBrowser
  * Aufgabe (Schwer):
  * 1) Bringe das Beispiel zum laufen und erweitere es so, dass du die LED An und Aus machen kannst.
@@ -7,7 +7,7 @@
  * https://github.com/me-no-dev/ESPAsyncWebServer#serving-static-files
  * https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/
  * https://github.com/me-no-dev/arduino-esp32fs-plugin/releases/
- *  Zeige Sensordaten deiner Wahl auf der Webseite an.
+ * 2) Zeige Sensordaten deiner Wahl auf der Webseite an.
  * 3) Sende Befehle über den schnelleren Websocket Port.
  * https://github.com/me-no-dev/ESPAsyncWebServer#async-websocket-plugin
  * 
@@ -19,13 +19,13 @@
 #include <SPIFFS.h>
 #include <ESPmDNS.h>
 #include <WiFi.h>
-#include <AsyncTCP.h>      //FEHLERMELDUNG, da Library fehlte. Library muss vorher installiert werden. Habe die passende Library nicht gefunden. Es gibt ähnliche, aber nicht genau die...
+#include <AsyncTCP.h>
 #elif defined(ESP8266)
 #include <ESP8266WiFi.h>
 #include <ESPAsyncTCP.h>
 #include <ESP8266mDNS.h>
 #endif
-#include <ESPAsyncWebServer.h>  //FEHLERMELDUNG, da Library fehlte. Library muss vorher runtergeladen und installiert werden. https://github.com/me-no-dev/ESPAsyncWebServer
+#include <ESPAsyncWebServer.h>
 #include <SPIFFSEditor.h>
 
 // SKETCH BEGIN
