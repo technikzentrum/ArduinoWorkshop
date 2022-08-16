@@ -3,6 +3,8 @@
    Für ein System gehören jedoch meistens auch andere Komponenten dazu, in diesem Beispiel ein Handy.
    Du lernst JSON und eine API kennen von Telegramm: https://randomnerdtutorials.com/telegram-control-esp32-esp8266-nodemcu-outputs/
 
+Unter Librarys bitte installieren: DHT Sensor Libary for ESPx
+
    Aufgabe:
    1) Sende beim start eine Nachricht, das du online bist.
    2) Wenn irgendein Nutzer /status schreibt sende die aktuellen Messwerte.
@@ -25,15 +27,13 @@
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>   // Universal Telegram Bot Library written by Brian Lough: https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot
 #include <Preferences.h>
-#include "TinyDHT.h"
-#define DHTPIN 2
-#define DHTTYPE DHT22
-//#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+#include "DHTesp.h"
+int dhtPin = 13;
+DHTesp dht;
 
 // Bitte WLAN Zugangsdaten eingeben.
-const char* ssid = "REPLACE_WITH_YOUR_SSID";
-const char* password = "REPLACE_WITH_YOUR_PASSWORD";
+const char* ssid = "SnakeLTE";
+const char* password = "13371337";
 Preferences preferences;
 
 // Telegramm API auf deinen Bot einstellen:
@@ -49,8 +49,8 @@ int messureDelay = 5000;
 unsigned long lastTimeMessure;
 
 // Sensor
-int8_t luftfeuchtigkeit = 0;
-int16_t temperatur = 0;
+float luftfeuchtigkeit = 0;
+float temperatur = 0;
 int schwellwert = 50;
 bool isOver = false;
 #define userCount 1
@@ -67,7 +67,7 @@ void handleNewMessages(int numNewMessages) {// numNewMessages -> Anzahl von Nach
     String text = bot.messages[i].text;
     // Hole den Namen
     String from_name = bot.messages[i].from_name;
-
+    Serial.println(bot.messages[i].text);
     if (text == "/start") {// Wenn ein neuer Nuttzer
       String welcome = "Welcome, " + from_name + ".\n";
       welcome += "Du kannst folgende Befehle benutzen:\n\n";
@@ -75,15 +75,15 @@ void handleNewMessages(int numNewMessages) {// numNewMessages -> Anzahl von Nach
       welcome += "/status bekomme den aktuellen Status \n";
       bot.sendMessage(chat_id, welcome, "");
     } else if (text == "/status") {
-      String answer = "Luftfeuchtigkeit:" + luftfeuchtigkeit;
-      answer += "\nTemperatur:" + temperatur;
+      String answer = "Luftfeuchtigkeit:" + String(luftfeuchtigkeit);
+      answer += "\nTemperatur:" + String(temperatur);
       bot.sendMessage(chat_id, answer, "");
     } else if (text.startsWith("/setThreshold")) {
       int newSchwellwert = text.substring(14, text.length()).toInt();
       if (newSchwellwert != 0) {
         schwellwert = newSchwellwert;
         preferences.putInt("Schwellwert", newSchwellwert);
-        String answer = "Schwellwert aktuakisiert auf: " + schwellwert;
+        String answer = "Schwellwert aktuakisiert auf: " + String(schwellwert);
         bot.sendMessage(chat_id, answer, "");
       } else {
         bot.sendMessage(chat_id, "Fehler", "");
@@ -96,6 +96,7 @@ void handleNewMessages(int numNewMessages) {// numNewMessages -> Anzahl von Nach
 }
 
 void setup() {
+  Serial.begin(115200);
   // Stelle Daten wieder her
   preferences.begin("Telegramm", false);
   schwellwert = preferences.getInt("Schwellwert", schwellwert);
@@ -109,19 +110,22 @@ void setup() {
   }
   // Wie ist die interne IP Addresse
   Serial.println(WiFi.localIP());
-  dht.begin();
-  int8_t h = dht.readHumidity();
-  int16_t t = dht.readTemperature(1);
+  dht.setup(dhtPin, DHTesp::DHT11);
+  TempAndHumidity newValues = dht.getTempAndHumidity();
+  temperatur = newValues.temperature;
+  luftfeuchtigkeit = newValues.humidity;
   for (int i = 0; i < userCount; i++) {
-    bot.sendMessage(String(users[i]), String("Sensorknoten ist online!\nTemperatur: " + String(t) + "\nLuftfeuchtigkeit: " + String(h)), "");
+    bot.sendMessage(String(users[i]), String("Sensorknoten ist online!\nTemperatur: " + String(temperatur) + "\nLuftfeuchtigkeit: " + String(luftfeuchtigkeit)), "");
   }
 
 }
 
 void loop() {
   if (millis() > lastTimeBotRan + botRequestDelay)  {
+    Serial.print("Rufe ab: ");
     int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
-
+    Serial.println(numNewMessages);
+    Serial.println(bot.messages[0].chat_id);
     while (numNewMessages) {
       handleNewMessages(numNewMessages);
       numNewMessages = bot.getUpdates(bot.last_message_received + 1);
@@ -129,15 +133,21 @@ void loop() {
     lastTimeBotRan = millis();
   }
   if (millis() > lastTimeMessure + messureDelay) {
-    luftfeuchtigkeit = dht.readHumidity();
-    temperatur = dht.readTemperature(1);
+    Serial.print("Messe: ");
+    TempAndHumidity newValues = dht.getTempAndHumidity();
+    temperatur = newValues.temperature;
+    luftfeuchtigkeit = newValues.humidity;
+    Serial.println(luftfeuchtigkeit);
+    Serial.println(temperatur);
     for (int i = 0; i < userCount; i++) {
       if (luftfeuchtigkeit >= schwellwert && !isOver) {
         isOver = true;
         bot.sendMessage(String(users[i]), String("WARNUNG!\nTemperatur: " + String(temperatur) + "\nLuftfeuchtigkeit: " + String(luftfeuchtigkeit)), "");
       } else if (luftfeuchtigkeit < schwellwert && isOver) {
+        isOver = false;
         bot.sendMessage(String(users[i]), String("Entwarnung!\nTemperatur: " + String(temperatur) + "\nLuftfeuchtigkeit: " + String(luftfeuchtigkeit)), "");
       }
     }
+    lastTimeMessure = millis();
   }
 }
