@@ -14,7 +14,7 @@ Tag 1:
 - Praxis: Mit Funktionen über die Konsole die LED An/Aus schalten. + Eigene Erweiterungen
 - Theorie: Was sind Bibliotheken und wie benutze/finde ich diese.
 - Praxis: Ramp Bibliotheken benutzen und Asynchron eine LED faden lassen.
-- Theorie: Wichtige Funktionen in Arduino -> Beispiele bis Tag zu ende
+- Theorie: Wichtige Funktionen in Arduino -> Beispiele
  
 Tag 2:
 - Theorie: Wichtige Funktionen in Arduino (Wiederholung, damit man es besser festigt)
@@ -27,7 +27,7 @@ Tag 2:
 - Praxis: Beide Sensoren abfragen und auf einem Display(SPI) ausgeben.
 - Praxis: Mehrere Sensoren abfragen und diese auf dem Display ausgeben, bei zu großer Differenz auf dem Display warnen.
 - Theorie + Praxis: verschiedenen Microcontroller einbinden (ESP32, STM32)
-- Praxis: ESP32 Weboberfläche mit Knopf -> Weitere Beispiele bis Ende des Tages
+- Praxis: ESP32 Weboberfläche mit Knopf -> Weitere Beispiele
 
 Tag 3:
 - Theorie: APIs und Schnittstellen
